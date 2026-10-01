@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Find Your Item</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <!-- ================= NAVBAR ================= -->
+    <header class="navbar">
+        <div class="nav-container">
+
+            <a href="#" class="brand" onclick="showPage('home')">
+                <div class="brand-icon">🔍</div>
+                <span>Find Your Item</span>
+            </a>
+
+            <nav class="nav-menu">
+                <button
+                    class="nav-link active"
+                    id="navHome"
+                    onclick="showPage('home')"
+                >
+                    📁 &nbsp;Lihat Barang
+                </button>
+
+                <button
+                    class="nav-link"
+                    id="navReport"
+                    onclick="showPage('report')"
+                >
+                    📋 &nbsp;Lapor Temuan
+                </button>
+            </nav>
+
+            <button class="admin-btn" onclick="adminLogin()">
+                🔐 Admin
+            </button>
+
+        </div>
+    </header>
+
+
+    <!-- ================= HOME PAGE ================= -->
+    <main id="homePage" class="page">
+
+        <section class="hero">
+
+            <div class="hero-content">
+
+                <h1>
+                    Temukan kembali barang
+                    <br>
+                    <span>yang Anda cari.</span>
+                </h1>
+
+                <p>
+                    Platform komunitas untuk melaporkan dan menemukan kembali
+                    barang hilang. Siapapun bisa melaporkan barang temuan —
+                    gratis, tanpa perlu daftar akun.
+                </p>
+
+                <button
+                    class="primary-btn"
+                    onclick="showPage('report')"
+                >
+                    📋 &nbsp; Saya Menemukan Barang
+                </button>
+
+            </div>
+
+        </section>
+
+
+        <!-- ================= STATISTICS ================= -->
+
+        <section class="statistics">
+
+            <div class="stat-card">
+                <strong id="totalItems">4</strong>
+                <span>Barang Dilaporkan</span>
+            </div>
+
+            <div class="stat-card">
+                <strong id="returnedItems">0</strong>
+                <span>Berhasil Dikembalikan</span>
+            </div>
+
+            <div class="stat-card">
+                <strong id="waitingItems">2</strong>
+                <span>Menunggu Pemilik</span>
+            </div>
+
+        </section>
+
+
+        <!-- ================= ITEM LIST ================= -->
+
+        <section class="items-section">
+
+            <div class="section-header">
+                <div>
+                    <h2>Daftar Barang Temuan</h2>
+                    <p>
+                        Cari nama, deskripsi, atau lokasi barang yang Anda
+                        kehilangan.
+                    </p>
+                </div>
+            </div>
+
+            <div class="search-box">
+
+                <input
+                    type="text"
+                    id="searchInput"
+                    placeholder="🔍  Cari barang..."
+                    oninput="searchItems()"
+                >
+
+                <select id="categoryFilter" onchange="searchItems()">
+                    <option value="">Semua Kategori</option>
+                    <option value="Dompet & Tas">Dompet & Tas</option>
+                    <option value="Elektronik">Elektronik</option>
+                    <option value="Kunci">Kunci</option>
+                    <option value="Dokumen">Dokumen</option>
+                    <option value="Lainnya">Lainnya</option>
+                </select>
+
+            </div>
+
+
+            <div id="itemsContainer" class="items-grid">
+                <!-- Diisi oleh JavaScript -->
+            </div>
+
+            <div id="emptyState" class="empty-state hidden">
+                <div>🔎</div>
+                <h3>Barang tidak ditemukan</h3>
+                <p>
+                    Coba gunakan kata pencarian atau kategori yang berbeda.
+                </p>
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <!-- ================= REPORT PAGE ================= -->
+
+    <main id="reportPage" class="page hidden">
+
+        <section class="report-section">
+
+            <div class="report-heading">
+                <h1>Lapor Barang Temuan</h1>
+                <p>
+                    Bantu orang lain menemukan barang mereka.
+                    Laporan gratis, tanpa daftar akun.
+                </p>
+            </div>
+
+
+            <form id="reportForm" class="report-card">
+
+                <div class="form-title">
+                    INFO BARANG
+                </div>
+
+
+                <!-- Nama Barang -->
+                <div class="form-group full">
+
+                    <label for="itemName">
+                        Nama Barang <span>*</span>
+                    </label>
+
+                    <input
+                        type="text"
+                        id="itemName"
+                        placeholder="Contoh: Dompet Kulit Hitam"
+                        required
+                    >
+
+                </div>
+
+
+                <!-- Kategori + Tanggal -->
+
+                <div class="form-row">
+
+                    <div class="form-group">
+
+                        <label for="category">
+                            Kategori <span>*</span>
+                        </label>
+
+                        <select id="category" required>
+
+                            <option value="">
+                                Pilih kategori
+                            </option>
+
+                            <option value="Dompet & Tas">
+                                Dompet & Tas
+                            </option>
+
+                            <option value="Elektronik">
+                                Elektronik
+                            </option>
+
+                            <option value="Kunci">
+                                Kunci
+                            </option>
+
+                            <option value="Dokumen">
+                                Dokumen
+                            </option>
+
+                            <option value="Lainnya">
+                                Lainnya
+                            </option>
+
+                        </select>
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label for="foundDate">
+                            Tanggal Ditemukan <span>*</span>
+                        </label>
+
+                        <input
+                            type="date"
+                            id="foundDate"
+                            required
+                        >
+
+                    </div>
+
+                </div>
+
+
+                <!-- Description -->
+
+                <div class="form-group full">
+
+                    <label for="description">
+                        Deskripsi Barang <span>*</span>
+                    </label>
+
+                    <textarea
+                        id="description"
+                        rows="4"
+                        placeholder="Jelaskan ciri-ciri barang secara detail: warna, ukuran, kondisi, isi, dll."
+                        required
+                    ></textarea>
+
+                </div>
+
+
+                <!-- Location -->
+
+                <div class="form-group full">
+
+                    <label for="location">
+                        Lokasi Ditemukan <span>*</span>
+                    </label>
+
+                    <input
+                        type="text"
+                        id="location"
+                        placeholder="Contoh: Stasiun MRT Lebak Bulus, dekat pintu keluar A"
+                        required
+                    >
+
+                </div>
+
+
+                <!-- Photo -->
+
+                <div class="form-group full">
+
+                    <label for="photo">
+                        URL Foto (Opsional)
+                    </label>
+
+                    <input
+                        type="url"
+                        id="photo"
+                        placeholder="https://contoh.com/foto-barang.jpg"
+                    >
+
+                    <small>
+                        Masukkan URL gambar jika tersedia.
+                    </small>
+
+                </div>
+
+
+                <!-- Submit -->
+
+                <button type="submit" class="submit-btn">
+                    📋 &nbsp; Laporkan Barang Temuan
+                </button>
+
+            </form>
+
+        </section>
+
+    </main>
+
+
+    <!-- ================= MODAL ================= -->
+
+    <div id="successModal" class="modal hidden">
+
+        <div class="modal-content">
+
+            <div class="success-icon">
+                ✓
+            </div>
+
+            <h2>Laporan Berhasil!</h2>
+
+            <p>
+                Terima kasih telah membantu seseorang menemukan barangnya.
+            </p>
+
+            <button
+                class="primary-btn"
+                onclick="closeModal()"
+            >
+                Lihat Daftar Barang
+            </button>
+
+        </div>
+
+    </div>
+
+
+    <!-- ================= TOAST ================= -->
+
+    <div id="toast" class="toast">
+        Berhasil!
+    </div>
+
+
+    <script src="script.js"></script>
+
+</body>
+</html>
